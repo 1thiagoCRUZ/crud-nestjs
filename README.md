@@ -12,6 +12,7 @@ Estou seguindo a documentação oficial (https://docs.nestjs.com/) e aplicando c
 - **Dependency Injection:** Uso do sistema nativo do NestJS para gerenciar as dependências entre Controllers e Services, facilitando testes e manutenção.
 - **Repository Pattern:** Abstração da camada de acesso a dados, permitindo que o Service foque apenas nas regras de negócio.
 - **Migrations:** Controle de versão do esquema do banco de dados, permitindo evolução segura da estrutura das tabelas.
+- **Swagger / OpenAPI:** Documentação automática da API.
 
 O objetivo é criar uma API RESTful para gerenciamento de carros (CRUD), seguindo as melhores práticas, estrutura e a documentação oficial do NestJS.
 
@@ -43,6 +44,10 @@ npm run start:dev
 ```
 A API estará rodando em: http://localhost:3000 ou na porta que configurar no .env
 
+## 📚 Documentação da API (Swagger)
+Com o servidor rodando, acesse a documentação para testar as rotas diretamente pelo navegador:
+
+`http://localhost:3000/api`
 
 
 ## 🚗 Rotas disponíveis até agora
@@ -50,5 +55,7 @@ A API estará rodando em: http://localhost:3000 ou na porta que configurar no .e
 - **POST** `/cars` - Cria um novo carro.
 - **GET** `/cars` - Lista todos os carros.
 - **GET** `/cars/:id` - Busca um carro pelo ID.
+- **DELETE** `/cars/:id` - Excluir um carro específico.
+- **PUT** `/cars/:id` - Atualiza um carro pelo ID.
 
 
