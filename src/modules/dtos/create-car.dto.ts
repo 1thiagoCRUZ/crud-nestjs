@@ -10,6 +10,10 @@ export class CreateCarDto {
     @IsNotEmpty()
     model: string;
 
+    @IsString()
+    @IsNotEmpty()
+    urlImage: string;
+
     @IsInt()
     @Min(1886) // Ano do primeiro carro
     year: number;

@@ -11,5 +11,8 @@ export class Car {
     model: string;
 
     @Column()
+    urlImage: string;
+
+    @Column()
     year: number;
 }

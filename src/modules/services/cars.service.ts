@@ -3,31 +3,30 @@ import { Car } from "../entities/cars.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateCarDto } from "../dtos/create-car.dto";
+import { CarsRepository } from "../repositories/cars.repository";
+import { UpdateCarDto } from "../dtos/update-car.dto";
 
 @Injectable()
 export class CarsService {
-    constructor(
-        @InjectRepository(Car)
-        private carsRepository: Repository<Car>,
-    ) {}
+    constructor(private readonly carsRepository: CarsRepository) { }
 
-    // criar carro
     async create(createCarDto: CreateCarDto): Promise<Car> {
-        const car = this.carsRepository.create(createCarDto);
-        return this.carsRepository.save(car);
+        return this.carsRepository.create(createCarDto);
     }
 
-    // buscar todos
     async findAll(): Promise<Car[]> {
-        return this.carsRepository.find();
+        return this.carsRepository.findAll();
     }
 
-    // buscar pelo ID
     async findOne(id: number): Promise<Car> {
-        const car = await this.carsRepository.findOneBy({ id });
-        if (!car) {
-            throw new NotFoundException(`Carro com ID ${id} não encontrado`);
-        }
-        return car;
+        return this.carsRepository.findOne(id);
+    }
+
+    async update(id: number, updateCarDto: UpdateCarDto): Promise<void> {
+        return this.carsRepository.update(id, updateCarDto);
+    }
+
+    async remove(id: number): Promise<void> {
+        return this.carsRepository.remove(id);
     }
 }
