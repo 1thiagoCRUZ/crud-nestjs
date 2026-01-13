@@ -4,9 +4,10 @@ import { Car } from "./entities/cars.entity";
 import { CarsController } from "./controllers/cars.controller";
 import { CarsService } from "./services/cars.service";
 import { CarsRepository } from "./repositories/cars.repository";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Car])], // isso aqui registra a Entidade
+    imports: [TypeOrmModule.forFeature([Car]), AuthModule], // isso aqui registra a Entidade
     controllers: [CarsController],
     providers: [CarsService, CarsRepository]
 })

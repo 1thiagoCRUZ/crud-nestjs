@@ -1,41 +1,40 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { CarsService } from "../services/cars.service";
-import { CreateCarDto } from "../dtos/create-car.dto";
+import { CreateCarDto } from "../dtos/cars/create-car.dto";
 import { Car } from "../entities/cars.entity";
-import { UpdateCarDto } from "../dtos/update-car.dto";
+import { UpdateCarDto } from "../dtos/cars/update-car.dto";
+import { AuthGuard } from "@nestjs/passport";
+import { User } from "../entities/user.entity";
 
 @Controller('cars')
 export class CarsController {
-    // injeção de dependencia do service
     constructor(private readonly carsService: CarsService) { }
 
     @Post()
-    @HttpCode(HttpStatus.CREATED) // Isso aqui serve pra retornar um código http especifico, pra criado por ex seria 201
-    // usando o dto aqui para garantir que os dados venham corretos
-    async create(@Body() createCarDto: CreateCarDto): Promise<Car> {
-        return this.carsService.create(createCarDto);
+    @UseGuards(AuthGuard('jwt'))
+    create(@Body() createCarDto: CreateCarDto, @Req() req) {
+        return this.carsService.create(createCarDto, req.user);
     }
 
     @Get()
-    async findAll(): Promise<Car[]> {
+    findAll() {
         return this.carsService.findAll();
     }
 
     @Get(':id')
-    // ParseIntPipe converte o 1 da url que vem como string num int automaticamente
-    async findOne(@Param('id', ParseIntPipe) id: number): Promise<Car> {
+    findOne(@Param('id', ParseIntPipe) id: number) {
         return this.carsService.findOne(id);
     }
 
     @Put(':id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async update(@Param('id', ParseIntPipe) id: number, @Body() updateCarDto: UpdateCarDto): Promise<void> {
+    @UseGuards(AuthGuard('jwt'))
+    update(@Param('id', ParseIntPipe) id: number, @Body() updateCarDto: UpdateCarDto) {
         return this.carsService.update(id, updateCarDto);
     }
 
     @Delete(':id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async remove(@Param('id', ParseIntPipe) id: number) {
+    @UseGuards(AuthGuard('jwt'))
+    remove(@Param('id', ParseIntPipe) id: number) {
         return this.carsService.remove(id);
     }
 }
