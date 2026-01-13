@@ -16,12 +16,11 @@ export class Like {
     carId: number;
 
     // 1 like pertence a 1 user
-    @ManyToOne(() => User, (user) => user.likes)
+    @ManyToOne(() => User, (user) => user.likes, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'userId' })
     user: User;
 
-    // 1 like pertence a 1 carro
-    @ManyToOne(() => Car, (car) => car.likes)
+    @ManyToOne(() => Car, (car) => car.likes, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'carId' })
     car: Car;
 }

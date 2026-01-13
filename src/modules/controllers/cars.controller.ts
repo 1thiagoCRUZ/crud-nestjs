@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { CarsService } from "../services/cars.service";
 import { CreateCarDto } from "../dtos/cars/create-car.dto";
-import { Car } from "../entities/cars.entity";
 import { UpdateCarDto } from "../dtos/cars/update-car.dto";
 import { AuthGuard } from "@nestjs/passport";
-import { User } from "../entities/user.entity";
 
 @Controller('cars')
 export class CarsController {

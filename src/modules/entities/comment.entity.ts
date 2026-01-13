@@ -19,11 +19,11 @@ export class Comment {
     @CreateDateColumn()
     createdAt: Date;
 
-    @ManyToOne(() => User, (user) => user.comments)
+    @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'userId' })
     user: User;
 
-    @ManyToOne(() => Car, (car) => car.comments)
+    @ManyToOne(() => Car, (car) => car.comments, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'carId' })
     car: Car;
 }

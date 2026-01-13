@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
     imports: [TypeOrmModule.forFeature([Car]), AuthModule], // isso aqui registra a Entidade
     controllers: [CarsController],
-    providers: [CarsService, CarsRepository]
+    providers: [CarsService, CarsRepository],
+    exports: [CarsRepository]
 })
 export class CarsModule {}
