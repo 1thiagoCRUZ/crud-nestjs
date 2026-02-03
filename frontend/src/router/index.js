@@ -15,20 +15,19 @@ const router = createRouter({
             path: '/feed',
             name: 'feed',
             component: FeedView,
-            meta: { requiresAuth: true } // Marca essa rota como protegida
+            meta: { requiresAuth: true }
         }
     ]
 });
 
-// GUARDA DE ROTAS (Segurança no Front)
 router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
 
     // Se a rota precisa de auth e o cara NÃO tem token...
     if (to.meta.requiresAuth && !auth.token) {
-        next('/'); // ...manda pro login
+        next('/');
     } else {
-        next(); // ...pode passar
+        next();
     }
 });
 

@@ -78,8 +78,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
-import { Car, Mail, Lock } from 'lucide-vue-next'; // Ícones bonitos
-
+import { Car, Mail, Lock } from 'lucide-vue-next';
 const auth = useAuthStore();
 const router = useRouter();
 
@@ -89,7 +88,6 @@ const loading = ref(false);
 
 async function handleLogin() {
   loading.value = true;
-  // Pequeno delay fake só pra mostrar a animação do botão (opcional)
   await new Promise(r => setTimeout(r, 500));
   
   const success = await auth.login(email.value, password.value);
@@ -104,7 +102,6 @@ async function handleLogin() {
 </script>
 
 <style scoped>
-/* Animação de entrada suave */
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }

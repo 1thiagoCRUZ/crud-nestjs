@@ -112,7 +112,6 @@ import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router";
 import { Plus, X, Car, LogOut } from "lucide-vue-next";
 
-// Adicione essa funçãozinha para clicar no logo e subir a tela
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -133,11 +132,9 @@ const form = reactive({
   urlImage: "",
 });
 
-// Carregar Feed
 async function loadCars() {
   try {
     const response = await api.get("/cars");
-    // Ordenar do mais novo pro mais antigo (gambiarra no front se o back nao ordenar)
     cars.value = response.data.reverse();
   } catch (error) {
     if (error.response?.status === 401) handleLogout();
@@ -146,22 +143,19 @@ async function loadCars() {
   }
 }
 
-// Criar Carro
 async function createCar() {
   try {
     await api.post("/cars", {
       ...form,
-      year: Number(form.year), // Garante que ano é numero
+      year: Number(form.year),
     });
 
-    // Limpa e fecha
     showModal.value = false;
     form.brand = "";
     form.model = "";
     form.year = "";
     form.urlImage = "";
 
-    // Recarrega lista
     await loadCars();
   } catch (error) {
     alert("Erro ao criar carro: " + error.message);
@@ -177,7 +171,6 @@ onMounted(loadCars);
 </script>
 
 <style scoped>
-/* Animaçãozinha pro modal aparecer suave */
 .animate-fade-in-up {
   animation: fadeInUp 0.3s ease-out;
 }

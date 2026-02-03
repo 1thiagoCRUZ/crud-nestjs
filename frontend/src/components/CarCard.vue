@@ -15,7 +15,7 @@
 
     <div class="w-full h-64 bg-gray-100 relative">
       <img 
-        :src="car.urlImage || 'https://placehold.co/600x400?text=Sem+Imagem'" 
+        :src="car.urlImage || 'https://placehold.co/600x400'" 
         class="w-full h-full object-cover"
         alt="Carro"
       />
@@ -86,14 +86,12 @@ import api from '../services/api';
 const props = defineProps({ car: Object });
 const emit = defineEmits(['like']);
 
-// Estado Local
 const showComments = ref(false);
-const isLiked = ref(false); // Idealmente viria do backend: props.car.isLiked
-const localLikesCount = ref(Math.floor(Math.random() * 50)); // Mock de curtidas
+const isLiked = ref(false);
+const localLikesCount = ref(Math.floor(Math.random() * 50));
 const comments = ref([]);
 const newComment = ref('');
 
-// Buscar comentários quando abrir a seção
 async function loadComments() {
     try {
         const { data } = await api.get(`/comments/car/${props.car.id}`);
@@ -103,25 +101,22 @@ async function loadComments() {
     }
 }
 
-// Enviar Comentário
 async function sendComment() {
     if (!newComment.value) return;
     try {
         const { data } = await api.post(`/comments/${props.car.id}`, { content: newComment.value });
-        comments.value.unshift(data); // Adiciona no topo da lista
-        newComment.value = ''; // Limpa input
+        comments.value.unshift(data);
+        newComment.value = '';
     } catch (error) {
         alert('Erro ao comentar!');
     }
 }
 
-// Dar Like
 async function toggleLike() {
     try {
         const { data } = await api.post(`/likes/${props.car.id}`);
         isLiked.value = !isLiked.value;
-        
-        // Ajusta contador visualmente
+
         if (data.status === 'liked') localLikesCount.value++;
         else localLikesCount.value--;
         
@@ -130,7 +125,6 @@ async function toggleLike() {
     }
 }
 
-// Carregar comentários iniciais se quiser, ou usar watch no showComments
 import { watch } from 'vue';
 watch(showComments, (newVal) => {
     if (newVal && comments.value.length === 0) loadComments();
